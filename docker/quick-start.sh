@@ -50,7 +50,6 @@ if [ "$create_env" = true ]; then
     DOCUMENT_PASSWORD_KEY=$(openssl rand -base64 32)
     POSTGRES_PASSWORD=$(openssl rand -base64 16)
     MINIO_ROOT_PASSWORD=$(openssl rand -base64 16)
-    REDIS_PASSWORD=$(openssl rand -base64 16)
 
     # Update .env with generated secrets
     if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -59,14 +58,12 @@ if [ "$create_env" = true ]; then
         sed -i '' "s|DOCUMENT_PASSWORD_KEY=.*|DOCUMENT_PASSWORD_KEY=$DOCUMENT_PASSWORD_KEY|" .env
         sed -i '' "s|POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=$POSTGRES_PASSWORD|" .env
         sed -i '' "s|MINIO_ROOT_PASSWORD=.*|MINIO_ROOT_PASSWORD=$MINIO_ROOT_PASSWORD|" .env
-        sed -i '' "s|REDIS_PASSWORD=.*|REDIS_PASSWORD=$REDIS_PASSWORD|" .env
     else
         # Linux
         sed -i "s|NEXTAUTH_SECRET=.*|NEXTAUTH_SECRET=$NEXTAUTH_SECRET|" .env
         sed -i "s|DOCUMENT_PASSWORD_KEY=.*|DOCUMENT_PASSWORD_KEY=$DOCUMENT_PASSWORD_KEY|" .env
         sed -i "s|POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=$POSTGRES_PASSWORD|" .env
         sed -i "s|MINIO_ROOT_PASSWORD=.*|MINIO_ROOT_PASSWORD=$MINIO_ROOT_PASSWORD|" .env
-        sed -i "s|REDIS_PASSWORD=.*|REDIS_PASSWORD=$REDIS_PASSWORD|" .env
     fi
 
     echo "✓ Generated secure passwords and secrets"

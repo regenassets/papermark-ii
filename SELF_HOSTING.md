@@ -65,7 +65,6 @@ NEXT_PUBLIC_APP_BASE_HOST=your-domain.com
 # Passwords
 POSTGRES_PASSWORD=<strong-password>
 MINIO_ROOT_PASSWORD=<strong-password>
-REDIS_PASSWORD=<strong-password>
 MINIO_ENDPOINT=your-domain.com:9000
 ```
 
@@ -101,8 +100,9 @@ The Docker Compose setup includes:
 - **Papermark App**: Next.js application (port 3000)
 - **PostgreSQL**: Database (port 5432)
 - **MinIO**: S3-compatible storage (ports 9000, 9001)
-- **Redis**: Caching and job queues (port 6379)
 - **Nginx**: Reverse proxy with SSL support (ports 80, 443) - optional
+
+**Note on Redis**: Papermark uses Upstash's REST API for Redis, which is not compatible with standard Redis. For rate limiting and caching features, you'll need to use Upstash's cloud service (free tier available at [console.upstash.com/redis](https://console.upstash.com/redis)).
 
 ### Service Details
 
@@ -121,11 +121,14 @@ The Docker Compose setup includes:
 - **Console**: Access at http://server-ip:9001
 - **Data Volume**: `minio_data`
 
-#### Redis
+#### Redis (Optional - Upstash Cloud)
 
-- **Image**: redis:7-alpine
-- **Password Protected**: Yes (via `REDIS_PASSWORD`)
-- **Data Volume**: `redis_data`
+For rate limiting and caching, Papermark uses Upstash's REST API which requires their cloud service:
+- **Free Tier**: 10K commands/day
+- **Sign up**: https://console.upstash.com/redis
+- **Configuration**: Set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in `.env`
+
+**Note**: Standard self-hosted Redis is not supported as Papermark uses the `@upstash/redis` SDK which requires Upstash's REST API.
 
 ### Deployment Options
 

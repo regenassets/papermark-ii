@@ -62,23 +62,25 @@ services:
     networks:
       - papermark-network
 
-  # Redis for caching and job queues
-  redis:
-    image: redis:7-alpine
-    container_name: papermark-redis
-    restart: unless-stopped
-    command: redis-server --requirepass ${REDIS_PASSWORD:-changeme}
-    volumes:
-      - redis_data:/data
-    ports:
-      - "6379:6379"
-    healthcheck:
-      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - papermark-network
+  # Redis - OPTIONAL: Standard Redis does not work with Upstash SDK
+  # For rate limiting and caching, use Upstash cloud service instead
+  # Uncomment and configure UPSTASH_REDIS_* variables in .env if needed
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: papermark-redis
+  #   restart: unless-stopped
+  #   command: redis-server --requirepass ${REDIS_PASSWORD:-changeme}
+  #   volumes:
+  #     - redis_data:/data
+  #   ports:
+  #     - "6379:6379"
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #   networks:
+  #     - papermark-network
 
   # Papermark Application
   papermark:
@@ -91,8 +93,6 @@ services:
       postgres:
         condition: service_healthy
       minio:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     environment:
       # Database
@@ -121,11 +121,12 @@ services:
       # Document encryption
       NEXT_PRIVATE_DOCUMENT_PASSWORD_KEY: ${DOCUMENT_PASSWORD_KEY}
 
-      # Redis
-      UPSTASH_REDIS_REST_URL: http://redis:6379
-      UPSTASH_REDIS_REST_TOKEN: ${REDIS_PASSWORD:-changeme}
-      UPSTASH_REDIS_REST_LOCKER_URL: http://redis:6379
-      UPSTASH_REDIS_REST_LOCKER_TOKEN: ${REDIS_PASSWORD:-changeme}
+      # Optional: Redis (Upstash) - For rate limiting
+      # Note: Requires Upstash cloud service, standard Redis won't work
+      UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL:-}
+      UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN:-}
+      UPSTASH_REDIS_REST_LOCKER_URL: ${UPSTASH_REDIS_REST_LOCKER_URL:-}
+      UPSTASH_REDIS_REST_LOCKER_TOKEN: ${UPSTASH_REDIS_REST_LOCKER_TOKEN:-}
 
       # Optional: Email (Resend)
       RESEND_API_KEY: ${RESEND_API_KEY:-}
@@ -205,8 +206,8 @@ volumes:
     driver: local
   minio_data:
     driver: local
-  redis_data:
-    driver: local
+  # redis_data:  # Uncomment if using local Redis
+  #   driver: local
 
 networks:
   papermark-network:
