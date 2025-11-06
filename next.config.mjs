@@ -12,6 +12,8 @@ const nextConfig = {
     process.env.VERCEL_ENV === "production"
       ? process.env.NEXT_PUBLIC_BASE_URL
       : undefined,
+  // Enable standalone output for Docker deployment
+  output: process.env.DOCKER_BUILD === "true" ? "standalone" : undefined,
   async redirects() {
     return [
       {
