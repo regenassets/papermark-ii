@@ -12,6 +12,8 @@ process.env.QSTASH_CURRENT_SIGNING_KEY = "test-signing-key";
 process.env.QSTASH_NEXT_SIGNING_KEY = "test-next-signing-key";
 process.env.NEXT_PRIVATE_UNSUBSCRIBE_JWT_SECRET = "test-jwt-secret-for-testing-only";
 process.env.RESEND_API_KEY = "test-resend-api-key-for-testing-only";
+process.env.NEXT_PUBLIC_BASE_URL = "https://test.papermark.io";
+process.env.NEXT_PRIVATE_VERIFICATION_SECRET = "test-verification-secret";
 
 // Mock external services
 vi.mock("@vercel/blob", () => ({
