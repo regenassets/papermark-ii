@@ -27,7 +27,7 @@ Papermark is the open-source document-sharing alternative to DocSend, featuring 
 - **Shareable Links:** Share your documents securely by sending a custom link.
 - **Custom Branding:** Add a custom domain and your own branding.
 - **Analytics:** Gain insights through document tracking and soon page-by-page analytics.
-- **Self-hosted, Open-source:** Host it yourself and customize it as needed.
+- **Self-hosted, Open-source:** Host it yourself with our complete Docker setup. See the [Self-Hosting Guide](SELF_HOSTING.md).
 
 ## Demo
 
@@ -49,9 +49,29 @@ Papermark is the open-source document-sharing alternative to DocSend, featuring 
 
 ## Getting Started
 
-### Prerequisites
+### Self-Hosting with Docker (Recommended)
 
-Here's what you need to run Papermark:
+The easiest way to self-host Papermark is using Docker. We provide a complete Docker setup with automated configuration:
+
+```bash
+git clone https://github.com/mfts/papermark.git
+cd papermark
+./docker/quick-start.sh
+```
+
+The quick-start script will:
+- Generate secure passwords and secrets automatically
+- Configure all required environment variables
+- Set up PostgreSQL, MinIO (S3-compatible storage), and Nginx
+- Start all services with one command
+
+For detailed instructions, SSL setup, and advanced configuration, see the **[Self-Hosting Guide](SELF_HOSTING.md)**.
+
+### Development Setup
+
+#### Prerequisites
+
+Here's what you need to run Papermark locally for development:
 
 - Node.js (version >= 18.17.0)
 - PostgreSQL Database
@@ -128,7 +148,13 @@ pipenv update tinybird-cli
 
 Papermark is an open-source project, and we welcome contributions from the community.
 
-If you'd like to contribute, please fork the repository and make any changes you'd like. Pull requests are warmly welcome.
+If you'd like to contribute, please:
+- Read our [Contributing Guide](CONTRIBUTING.md) for guidelines
+- Check out the [open issues](https://github.com/mfts/papermark/issues)
+- Review our [Security Policy](SECURITY.md) before reporting vulnerabilities
+- Sign the [Contributor License Agreement](CLA.md) when submitting PRs
+
+Pull requests are warmly welcome!
 
 ### Our Contributors ✨
 
