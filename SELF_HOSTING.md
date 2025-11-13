@@ -206,6 +206,12 @@ cp nginx/conf.d/papermark-no-ssl.conf.example nginx/conf.d/papermark.conf
 
 ## Environment Variables
 
+All environment variables for Docker deployment are documented in the `.env.docker` template file. The quick-start script will help you configure these automatically, or you can manually copy and edit:
+
+```bash
+cp .env.docker .env
+```
+
 ### Required Variables
 
 | Variable | Description | Example |
@@ -514,11 +520,39 @@ sudo ufw allow 443/tcp  # HTTPS
 sudo ufw enable
 ```
 
+## Known Limitations
+
+### Redis / Upstash Requirement
+
+Papermark uses the `@upstash/redis` SDK which requires Upstash's REST API. This means:
+
+- **Standard self-hosted Redis will not work** for rate limiting and caching features
+- You need to use **Upstash's cloud service** (free tier available: 10K commands/day)
+- Without Upstash Redis:
+  - Core features work normally (document sharing, viewing, analytics)
+  - Rate limiting will be disabled
+  - Some caching features may not be available
+
+To use Redis features, sign up for a free account at [console.upstash.com/redis](https://console.upstash.com/redis) and configure the `UPSTASH_REDIS_REST_*` environment variables.
+
+### Optional Cloud Services
+
+Some features require external cloud services:
+
+- **Email notifications**: Requires Resend API key
+- **Google Sign-In**: Requires Google OAuth credentials
+- **Advanced analytics**: Requires Tinybird account
+- **Payments**: Requires Stripe account
+- **Rate limiting**: Requires Upstash Redis
+
+Papermark will function without these services, but related features will be disabled.
+
 ## Getting Help
 
 - **Documentation**: https://docs.papermark.io
 - **GitHub Issues**: https://github.com/mfts/papermark/issues
 - **Community**: https://github.com/mfts/papermark/discussions
+- **Contributing**: See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## License Considerations
 
