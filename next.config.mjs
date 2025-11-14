@@ -196,10 +196,22 @@ function prepareRemotePatterns() {
 
   // Default region patterns
   if (process.env.NEXT_PRIVATE_UPLOAD_DISTRIBUTION_HOST) {
-    patterns.push({
-      protocol: "https",
-      hostname: process.env.NEXT_PRIVATE_UPLOAD_DISTRIBUTION_HOST,
-    });
+    // For local development with MinIO, support both http and https
+    const hostname = process.env.NEXT_PRIVATE_UPLOAD_DISTRIBUTION_HOST;
+    const isLocalhost = hostname.includes('localhost') || hostname.includes('127.0.0.1');
+
+    if (isLocalhost) {
+      // Add both http and https for localhost (MinIO)
+      patterns.push(
+        { protocol: "http", hostname: hostname.split(':')[0], port: hostname.split(':')[1] || '' },
+        { protocol: "https", hostname: hostname.split(':')[0], port: hostname.split(':')[1] || '' }
+      );
+    } else {
+      patterns.push({
+        protocol: "https",
+        hostname: hostname,
+      });
+    }
   }
 
   if (process.env.NEXT_PRIVATE_ADVANCED_UPLOAD_DISTRIBUTION_HOST) {
