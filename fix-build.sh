@@ -1,33 +1,43 @@
 #!/bin/bash
 # Complete Docker cache clear and rebuild script
+# Nuclear option to force Docker to rebuild from scratch
+
+set -e
 
 echo "==============================================="
-echo "Papermark Docker - Complete Cache Clear"
+echo "Papermark Docker - NUCLEAR Cache Clear"
 echo "==============================================="
 echo ""
+echo "WARNING: This will remove ALL Docker images and cached layers"
+echo "Press Ctrl+C within 5 seconds to cancel..."
+sleep 5
 
+echo ""
 echo "Step 1: Stopping all containers..."
 docker compose down -v
 
 echo ""
-echo "Step 2: Removing ALL Docker build cache..."
-docker builder prune -af
+echo "Step 2: Removing ALL Docker containers, images, and build cache..."
+docker system prune -a -f --volumes
 
 echo ""
-echo "Step 3: Removing old images..."
-docker rmi $(docker images 'papermark*' -q) 2>/dev/null || echo "No papermark images to remove"
-docker rmi node:18-alpine 2>/dev/null || echo "Node 18 image already removed or not present"
+echo "Step 3: Removing buildx cache..."
+docker buildx prune -af
 
 echo ""
-echo "Step 4: Pulling Node 20 image explicitly..."
+echo "Step 4: Verify Node 20 in Dockerfile..."
+grep "FROM node" Dockerfile
+echo ""
+
+echo "Step 5: Pulling Node 20 base image fresh..."
 docker pull node:20-alpine
 
 echo ""
-echo "Step 5: Building with no cache..."
-docker compose build --no-cache --pull
+echo "Step 6: Building from absolute scratch (no cache)..."
+DOCKER_BUILDKIT=1 docker compose build --no-cache --pull
 
 echo ""
-echo "Step 6: Starting services..."
+echo "Step 7: Starting services..."
 docker compose up -d
 
 echo ""
