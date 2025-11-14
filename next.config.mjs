@@ -15,18 +15,7 @@ const nextConfig = {
   // Enable standalone output for Docker deployment
   output: process.env.DOCKER_BUILD === "true" ? "standalone" : undefined,
   async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/dashboard",
-        permanent: false,
-        has: [
-          {
-            type: "host",
-            value: process.env.NEXT_PUBLIC_APP_BASE_HOST,
-          },
-        ],
-      },
+    const redirects = [
       {
         // temporary redirect set on 2025-10-22
         source: "/view/cmdn06aw00001ju04jgsf8h4f",
@@ -39,11 +28,28 @@ const nextConfig = {
         permanent: false,
       },
     ];
+
+    // Only add host-based redirect if NEXT_PUBLIC_APP_BASE_HOST is properly configured
+    if (process.env.NEXT_PUBLIC_APP_BASE_HOST && process.env.NEXT_PUBLIC_APP_BASE_HOST !== "localhost") {
+      redirects.unshift({
+        source: "/",
+        destination: "/dashboard",
+        permanent: false,
+        has: [
+          {
+            type: "host",
+            value: process.env.NEXT_PUBLIC_APP_BASE_HOST,
+          },
+        ],
+      });
+    }
+
+    return redirects;
   },
   async headers() {
     const isDev = process.env.NODE_ENV === "development";
 
-    return [
+    const headers = [
       {
         // Default headers for all routes
         source: "/:path*",
@@ -115,21 +121,6 @@ const nextConfig = {
         ],
       },
       {
-        source: "/services/:path*",
-        has: [
-          {
-            type: "host",
-            value: process.env.NEXT_PUBLIC_WEBHOOK_BASE_HOST,
-          },
-        ],
-        headers: [
-          {
-            key: "X-Robots-Tag",
-            value: "noindex",
-          },
-        ],
-      },
-      {
         source: "/api/webhooks/services/:path*",
         headers: [
           {
@@ -148,6 +139,27 @@ const nextConfig = {
         ],
       },
     ];
+
+    // Only add webhook host-based header if NEXT_PUBLIC_WEBHOOK_BASE_HOST is configured
+    if (process.env.NEXT_PUBLIC_WEBHOOK_BASE_HOST) {
+      headers.push({
+        source: "/services/:path*",
+        has: [
+          {
+            type: "host",
+            value: process.env.NEXT_PUBLIC_WEBHOOK_BASE_HOST,
+          },
+        ],
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex",
+          },
+        ],
+      });
+    }
+
+    return headers;
   },
   experimental: {
     outputFileTracingIncludes: {
