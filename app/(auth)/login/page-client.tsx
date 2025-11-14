@@ -61,7 +61,7 @@ export default function Login() {
             />
             <Link href="/">
               <span className="text-balance text-3xl font-semibold text-gray-900">
-                Welcome to Papermark
+                Welcome to Papermark ii
               </span>
             </Link>
             <h3 className="text-balance text-sm text-gray-800">
@@ -239,26 +239,9 @@ export default function Login() {
               <div className="mb-4 h-64 w-80">
                 <img
                   className="h-full w-full rounded-2xl object-cover shadow-2xl"
-                  src="/_static/testimonials/backtrace.jpeg"
-                  alt="Backtrace Capital"
+                  src="/_static/testimonials/team-photo.png"
+                  alt="Our Team"
                 />
-              </div>
-              {/* Text content */}
-              <div className="max-w-xl text-center">
-                <blockquote className="text-balance font-normal leading-8 text-white sm:text-xl sm:leading-9">
-                  <p>
-                    &quot;We raised our €30M Fund with Papermark Data Rooms.
-                    Love the customization, security and ease of use.&quot;
-                  </p>
-                </blockquote>
-                <figcaption className="mt-4">
-                  <div className="text-balance font-normal text-white">
-                    Michael Münnix
-                  </div>
-                  <div className="text-balance font-light text-gray-400">
-                    Partner, Backtrace Capital
-                  </div>
-                </figcaption>
               </div>
             </div>
             {/* White block with logos bottom 1/3, full width/height */}
