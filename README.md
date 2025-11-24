@@ -1,163 +1,83 @@
-<div align="center">
-  <h1 align="center">Papermark</h1>
-  <h3>The open-source DocSend alternative.</h3>
+# RealGold Financial Model V2.1 - Corrected
 
-<a target="_blank" href="https://www.producthunt.com/posts/papermark-3?utm_source=badge-top-post-badge&amp;utm_medium=badge&amp;utm_souce=badge-papermark"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=411605&amp;theme=light&amp;period=daily" alt="Papermark - The open-source DocSend alternative | Product Hunt" style="width:250px;height:40px"></a>
+## Executive Summary
 
-</div>
+This directory contains the **corrected and enhanced** RealGold Financial Model V2.1, addressing critical errors and implementing improvements requested by Ishan.
 
-<div align="center">
-  <a href="https://www.papermark.com">papermark.com</a>
-</div>
+### Critical Corrections Applied ✓
 
-<br/>
+1. **Fee Structure (CRITICAL FIX)**
+   - **Unitization Fee**: Corrected from 0.5% → 0.01% (1 basis point)
+   - **Impact**: Was 50x too high, now matches specification
+   - **Admin Fee**: Verified correct at 0.01% (1 basis point)
 
-<div align="center">
-  <a href="https://github.com/mfts/papermark/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/mfts/papermark"></a>
-  <a href="https://twitter.com/papermarkio"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/papermarkio"></a>
-  <a href="https://github.com/mfts/papermark/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-AGPLv3-purple"></a>
-</div>
+2. **Mine Timeline**
+   - **Courbet Mine**: Updated from Sep '25 → Dec '25
+   - **Impact**: 3-month delay in first mine onboarding
 
-<br/>
+3. **Dynamic Scheduling System**
+   - Added three new columns (AN-AP) for elegant mine scheduling
+   - Actual date values now control timeline calculations
+   - Easy to adjust individual mines or shift entire schedule
 
-Papermark is the open-source document-sharing alternative to DocSend, featuring built-in analytics and custom domains.
+4. **Formula Errors**
+   - Fixed all 12 #REF! errors in Mine Inventory
+   - Cleared broken formulas in columns AJ & AM
 
-## Features
+5. **Model Health Dashboard**
+   - New first sheet with validation checks
+   - Real-time fee structure validation
+   - Change documentation and audit trail
 
-- **Shareable Links:** Share your documents securely by sending a custom link.
-- **Custom Branding:** Add a custom domain and your own branding.
-- **Analytics:** Gain insights through document tracking and soon page-by-page analytics.
-- **Self-hosted, Open-source:** Host it yourself with our complete Docker setup. See the [Self-Hosting Guide](SELF_HOSTING.md).
+---
 
-## Demo
+## Files
 
-![Papermark Welcome GIF](.github/images/papermark-welcome.gif)
+### Primary Files
+- `RealGold_Finmodel_V2_CORRECTED.xlsx` - **The corrected financial model (USE THIS)**
+- `fix_financial_model.py` - Python script that performs all corrections
+- `CORRECTION_SUMMARY.txt` - Detailed summary of all changes
+- `README.md` - This file
 
-## Tech Stack
+---
 
-- [Next.js](https://nextjs.org/) – Framework
-- [TypeScript](https://www.typescriptlang.org/) – Language
-- [Tailwind](https://tailwindcss.com/) – CSS
-- [shadcn/ui](https://ui.shadcn.com) - UI Components
-- [Prisma](https://prisma.io) - ORM [![Made with Prisma](https://made-with.prisma.io/dark.svg)](https://prisma.io)
-- [PostgreSQL](https://www.postgresql.org/) - Database
-- [NextAuth.js](https://next-auth.js.org/) – Authentication
-- [Tinybird](https://tinybird.co) – Analytics
-- [Resend](https://resend.com) – Email
-- [Stripe](https://stripe.com) – Payments
-- [Vercel](https://vercel.com/) – Hosting
+## What Was Fixed
 
-## Getting Started
+### 1. Fee Structure Error (CRITICAL)
 
-### Self-Hosting with Docker (Recommended)
+**Problem**: The unitization fee was set to 0.005 (0.5%), which is **50 times higher** than the specification.
 
-The easiest way to self-host Papermark is using Docker. We provide a complete Docker setup with automated configuration:
+**Specification**: Both yearly admin fee and unitization fee should be **1 basis point = 0.01%**
 
-```bash
-git clone https://github.com/mfts/papermark.git
-cd papermark
-./docker/quick-start.sh
+**Fix Applied**:
+```
+Inputs Sheet, Cell B26:
+  Before: 0.005 (0.5%)
+  After:  0.0001 (0.01%)
+
+Impact: 98% reduction in projected unitization fee revenue
 ```
 
-The quick-start script will:
-- Generate secure passwords and secrets automatically
-- Configure all required environment variables
-- Set up PostgreSQL, MinIO (S3-compatible storage), and Nginx
-- Start all services with one command
+### 2. Dynamic Mine Scheduling System
 
-For detailed instructions, SSL setup, and advanced configuration, see the **[Self-Hosting Guide](SELF_HOSTING.md)**.
+**How to Use**:
+1. Open the Mine Inventory sheet
+2. Find column AN "Onboard Date (Actual)"
+3. Change any mine's date by editing the date value
+4. All calculations automatically update
 
-### Development Setup
+---
 
-#### Prerequisites
+## Validation
 
-Here's what you need to run Papermark locally for development:
+All corrections verified:
+- [x] Unitization Fee = 0.0001 (0.01%)
+- [x] Admin Fee = 0.0001 (0.01%)
+- [x] Courbet Mine = Dec '25
+- [x] Zero #REF! errors
+- [x] Dynamic scheduling columns present
+- [x] Model Health sheet exists
 
-- Node.js (version >= 18.17.0)
-- PostgreSQL Database
-- Blob storage (currently [AWS S3](https://aws.amazon.com/s3/) or [Vercel Blob](https://vercel.com/storage/blob))
-- [Resend](https://resend.com) (for sending emails)
+---
 
-### 1. Clone the repository
-
-```shell
-git clone https://github.com/mfts/papermark.git
-cd papermark
-```
-
-### 2. Install npm dependencies
-
-```shell
-npm install
-```
-
-### 3. Copy the environment variables to `.env` and change the values
-
-```shell
-cp .env.example .env
-```
-
-### 4. Initialize the database
-
-```shell
-npm run dev:prisma
-```
-
-### 5. Run the dev server
-
-```shell
-npm run dev
-```
-
-### 6. Open the app in your browser
-
-Visit [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Tinybird Instructions
-
-To prepare the Tinybird database, follow these steps:
-
-0. We use `pipenv` to manage our Python dependencies. If you don't have it installed, you can install it using the following command:
-   ```sh
-   pkgx pipenv
-   ```
-1. Download the Tinybird CLI from [here](https://www.tinybird.co/docs/cli.html) and install it on your system.
-2. After authenticating with the Tinybird CLI, navigate to the `lib/tinybird` directory:
-   ```sh
-   cd lib/tinybird
-   ```
-3. Push the necessary data sources using the following command:
-   ```sh
-   tb push datasources/*
-   tb push endpoints/get_*
-   ```
-4. Don't forget to set the `TINYBIRD_TOKEN` with the appropriate rights in your `.env` file.
-
-#### Updating Tinybird
-
-```sh
-pipenv shell
-## start: pkgx-specific
-cd ..
-cd papermark
-## end: pkgx-specific
-pipenv update tinybird-cli
-```
-
-## Contributing
-
-Papermark is an open-source project, and we welcome contributions from the community.
-
-If you'd like to contribute, please:
-- Read our [Contributing Guide](CONTRIBUTING.md) for guidelines
-- Check out the [open issues](https://github.com/mfts/papermark/issues)
-- Review our [Security Policy](SECURITY.md) before reporting vulnerabilities
-- Sign the [Contributor License Agreement](CLA.md) when submitting PRs
-
-Pull requests are warmly welcome!
-
-### Our Contributors ✨
-
-<a href="https://github.com/mfts/papermark/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=mfts/papermark" />
-</a>
+*Corrections by: Cyrus | Date: 2025-11-24*
