@@ -58,6 +58,11 @@ def create_xauconfig_timeline(wb):
     # Build 60 months starting Dec 2025
     start_date = datetime(2025, 12, 1)
 
+    # Row 3: Gold Price (assuming 3% CAGR from $2892.6)
+    config_ws['A3'] = 'Gold Price (CAGR)'
+    initial_gold_price = 2892.6
+    monthly_growth_rate = (1.03 ** (1/12)) - 1  # 3% annual = ~0.247% monthly
+
     month_labels = []
     for month_offset in range(60):
         col_idx = month_offset + 2  # Start at column B
@@ -66,11 +71,19 @@ def create_xauconfig_timeline(wb):
         current_date = start_date + relativedelta(months=month_offset)
         month_label = current_date.strftime("%b '%y")
 
+        # Row 3: Gold price with CAGR
+        gold_price = initial_gold_price * ((1 + monthly_growth_rate) ** month_offset)
+        config_ws[f'{col_letter}3'] = gold_price
+
+        # Row 4: Month label
         config_ws[f'{col_letter}4'] = month_label
+
+        # Row 6: Dropdown list
         config_ws[f'{col_letter}6'] = month_label
         month_labels.append(month_label)
 
     print(f"✓ Created 60-month timeline: {month_labels[0]} → {month_labels[59]}")
+    print(f"✓ Added gold price row with 3% CAGR")
 
     return True
 
@@ -195,17 +208,297 @@ def update_resource_supply_complete(wb):
         resource_ws[f'{col_letter}16'] = f'={col_letter}12-{col_letter}13'
 
     print("✓ Calculated formulas added (rows 8-10, 12-16)")
-    print("\n✅ Resource Supply COMPLETE - ALL rows now redistribute dynamically!")
+
+    # Add row labels for dollar values section
+    resource_ws['A18'] = 'Registered Resources ($)'
+    resource_ws['A19'] = 'Authorized Resources ($)'
+    resource_ws['A20'] = 'Releasable Resources ($)'
+    resource_ws['A21'] = 'Unlocked Resources ($)'
+    resource_ws['A22'] = 'Registration Fees ($)'
+    resource_ws['A23'] = 'Unitization Fees ($)'
+    resource_ws['A24'] = 'RealGold Token Minting Fees ($)'
+    resource_ws['A25'] = 'Total Reg & Unit Fee Rev ($)'
+    resource_ws['A26'] = 'Allocation to 1031 ($)'
+    resource_ws['A27'] = 'Allocation to RealGold Treasury ($)'
+
+    # Dollar value conversions (rows 18-27)
+    print("\nAdding dollar value conversions (rows 18-27)...")
+
+    for col_idx in range(2, 62):
+        col_letter = get_column_letter(col_idx)
+
+        # Row 18: Registered Resources ($) = Row 4 * Gold Price
+        resource_ws[f'{col_letter}18'] = f'={col_letter}4*XAUconfig!{col_letter}3'
+
+        # Row 19: Authorized Resources ($) = Row 5 * Gold Price
+        resource_ws[f'{col_letter}19'] = f'={col_letter}5*XAUconfig!{col_letter}3'
+
+        # Row 20: Releasable Resources ($) = Row 6 * Gold Price
+        resource_ws[f'{col_letter}20'] = f'={col_letter}6*XAUconfig!{col_letter}3'
+
+        # Row 21: Unlocked Resources ($) = Row 7 * Gold Price
+        resource_ws[f'{col_letter}21'] = f'={col_letter}7*XAUconfig!{col_letter}3'
+
+        # Row 22: Registration Fees ($) = Row 8 * Gold Price
+        resource_ws[f'{col_letter}22'] = f'={col_letter}8*XAUconfig!{col_letter}3'
+
+        # Row 23: Unitization Fees ($) = Row 10 * Gold Price
+        resource_ws[f'{col_letter}23'] = f'={col_letter}10*XAUconfig!{col_letter}3'
+
+        # Row 24: RealGold Token Minting Fees ($) = Row 13 * Gold Price
+        resource_ws[f'{col_letter}24'] = f'={col_letter}13*XAUconfig!{col_letter}3'
+
+        # Row 25: Total Reg & Unit Fee Rev ($) = Row 22 + Row 23
+        resource_ws[f'{col_letter}25'] = f'={col_letter}22+{col_letter}23'
+
+        # Row 26: Allocation to 1031 ($) = Row 15 * Gold Price
+        resource_ws[f'{col_letter}26'] = f'={col_letter}15*XAUconfig!{col_letter}3'
+
+        # Row 27: Allocation to RealGold Treasury ($) = Row 16 * Gold Price
+        resource_ws[f'{col_letter}27'] = f'={col_letter}16*XAUconfig!{col_letter}3'
+
+    print("✓ Dollar conversion formulas added")
+
+    # Add row labels for cumulative totals section
+    resource_ws['A29'] = 'Resource Supply Cumulative Totals'
+    resource_ws['A30'] = 'Cumulative Registered Resources (oz)'
+    resource_ws['A31'] = 'Cumulative Authorized Resources (oz)'
+    resource_ws['A32'] = 'Cumulative Releaseable Resources (oz)'
+    resource_ws['A33'] = 'Cumulative Unlocked to Markets (oz)'
+    resource_ws['A34'] = 'Cumulative Allocation to RealGold Treasury (oz)'
+    resource_ws['A36'] = 'Cumulative Registered Resources ($)'
+    resource_ws['A37'] = 'Cumulative Authorized Resources ($)'
+    resource_ws['A38'] = 'Cumulative Releasable Resources ($)'
+    resource_ws['A39'] = 'Cumulative Unlocked Resources ($)'
+    resource_ws['A40'] = 'Cumulative Allocation to RealGold Treasury ($)'
+
+    # Cumulative totals (rows 30-40)
+    print("\nAdding cumulative totals (rows 30-40)...")
+
+    for col_idx in range(2, 62):
+        col_letter = get_column_letter(col_idx)
+
+        # Row 30: Cumulative Registered Resources (oz)
+        resource_ws[f'{col_letter}30'] = f'=SUM($B$4:{col_letter}4)'
+
+        # Row 31: Cumulative Authorized Resources (oz)
+        resource_ws[f'{col_letter}31'] = f'=SUM($B$5:{col_letter}5)'
+
+        # Row 32: Cumulative Releaseable Resources (oz)
+        resource_ws[f'{col_letter}32'] = f'=SUM($B$6:{col_letter}6)'
+
+        # Row 33: Cumulative Unlocked to Markets (oz) - average of row 7 and 8
+        resource_ws[f'{col_letter}33'] = f'=SUM($B$7:{col_letter}8)/2'
+
+        # Row 34: Cumulative Allocation to RealGold Treasury (oz)
+        resource_ws[f'{col_letter}34'] = f'=SUM($B$16:{col_letter}16)'
+
+        # Row 36: Cumulative Registered Resources ($)
+        resource_ws[f'{col_letter}36'] = f'=SUM($B$18:{col_letter}18)'
+
+        # Row 37: Cumulative Authorized Resources ($)
+        resource_ws[f'{col_letter}37'] = f'=SUM($B$19:{col_letter}19)'
+
+        # Row 38: Cumulative Releasable Resources ($)
+        resource_ws[f'{col_letter}38'] = f'=SUM($B$20:{col_letter}20)'
+
+        # Row 39: Cumulative Unlocked Resources ($)
+        resource_ws[f'{col_letter}39'] = f'={col_letter}33*XAUconfig!{col_letter}3'
+
+        # Row 40: Cumulative Allocation to RealGold Treasury ($)
+        resource_ws[f'{col_letter}40'] = f'={col_letter}34*XAUconfig!{col_letter}3'
+
+    print("✓ Cumulative total formulas added")
+
+    # Add row labels for annual summaries section
+    resource_ws['A42'] = 'Annual Summaries'
+    resource_ws['A43'] = '# of mines brought online'
+    resource_ws['A44'] = 'Assayed Resources ($)'
+    resource_ws['A45'] = 'Authorized Resources ($)'
+    resource_ws['A46'] = 'Releasable Resources ($)'
+    resource_ws['A47'] = 'Released Resources ($)'
+    resource_ws['A48'] = 'Registration Fees ($)'
+    resource_ws['A49'] = 'Market Placement Fee ($)'
+    resource_ws['A50'] = 'Total Fee Revenue ($)'
+    resource_ws['A51'] = 'Total Allocation to 1031 ($)'
+    resource_ws['A52'] = 'Total Allocation to RealGold Treasury ($)'
+    resource_ws['A54'] = 'Assayed Resources (oz)'
+
+    # Annual summaries (rows 43-54) - sum every 12 months
+    print("\nAdding annual summaries (rows 43-54)...")
+
+    # Annual summaries are for full years, so we calculate for years 2026-2030
+    # Year 2026: columns N-Y (months 12-23, Jan '26 - Dec '26)
+    # Year 2027: columns Z-AK (months 24-35)
+    # Year 2028: columns AL-AW (months 36-47)
+    # Year 2029: columns AX-BI (months 48-59)
+
+    annual_columns = {
+        'Year 2026': (14, 25),   # columns N-Y (Jan '26 - Dec '26)
+        'Year 2027': (26, 37),   # columns Z-AK
+        'Year 2028': (38, 49),   # columns AL-AW
+        'Year 2029': (50, 61),   # columns AX-BI
+    }
+
+    for year_label, (start_col, end_col) in annual_columns.items():
+        # Determine which column to put the summary in
+        # Put it in the last month of the year (December)
+        summary_col = get_column_letter(end_col)
+
+        start_col_letter = get_column_letter(start_col)
+        end_col_letter = get_column_letter(end_col)
+
+        # Row 42: Year label
+        resource_ws[f'{summary_col}42'] = int(year_label.split()[1])
+
+        # Row 43: # of mines brought online
+        resource_ws[f'{summary_col}43'] = f'=SUM({start_col_letter}3:{end_col_letter}3)'
+
+        # Row 44: Assayed Resources ($)
+        resource_ws[f'{summary_col}44'] = f'=SUM({start_col_letter}18:{end_col_letter}18)'
+
+        # Row 45: Authorized Resources ($)
+        resource_ws[f'{summary_col}45'] = f'=SUM({start_col_letter}19:{end_col_letter}19)'
+
+        # Row 46: Releasable Resources ($)
+        resource_ws[f'{summary_col}46'] = f'=SUM({start_col_letter}20:{end_col_letter}20)'
+
+        # Row 47: Released Resources ($)
+        resource_ws[f'{summary_col}47'] = f'=SUM({start_col_letter}21:{end_col_letter}21)'
+
+        # Row 48: Registration Fees ($)
+        resource_ws[f'{summary_col}48'] = f'=SUM({start_col_letter}22:{end_col_letter}22)'
+
+        # Row 49: Market Placement Fee ($)
+        resource_ws[f'{summary_col}49'] = f'=SUM({start_col_letter}23:{end_col_letter}23)'
+
+        # Row 50: Total Fee Revenue ($)
+        resource_ws[f'{summary_col}50'] = f'=SUM({start_col_letter}25:{end_col_letter}25)'
+
+        # Row 51: Total Allocation to 1031 ($)
+        resource_ws[f'{summary_col}51'] = f'=SUM({start_col_letter}26:{end_col_letter}26)'
+
+        # Row 52: Total Allocation to RealGold Treasury ($)
+        resource_ws[f'{summary_col}52'] = f'=SUM({start_col_letter}27:{end_col_letter}27)'
+
+        # Row 54: Assayed Resources (oz)
+        resource_ws[f'{summary_col}54'] = f'=SUM({start_col_letter}4:{end_col_letter}4)'
+
+    print("✓ Annual summary formulas added")
+
+    print("\n✅ Resource Supply COMPLETE - ALL rows (3-54) now have formulas!")
+
+    return True
+
+def update_token_supply(wb):
+    """Update Token Supply with dynamic formulas"""
+    print_section("PHASE 5: Token Supply Dynamic Formulas")
+
+    ts_ws = wb['Token Supply (5yr)']
+
+    # Update headers
+    print("Setting up headers...")
+    for col_idx in range(2, 62):
+        col_letter = get_column_letter(col_idx)
+        ts_ws[f'{col_letter}1'] = f'=XAUconfig!{col_letter}4'
+
+    print("✓ Headers linked to XAUconfig")
+
+    # Add formulas for all 60 months
+    print("\nAdding Token Supply formulas...")
+
+    for col_idx in range(2, 62):
+        col_letter = get_column_letter(col_idx)
+        month_offset = col_idx - 2
+
+        # Row 3: RealGold Treasury = Resource Supply Row 11 (RGT Liquidity Fee)
+        ts_ws[f'{col_letter}3'] = f'=\'Resource Supply (5yr)\'!{col_letter}11'
+
+        # Row 5: Mine 2 - uses SUMPRODUCT for conditional calculation
+        # (Unlocked - Admin Fees) * AF column for mines at this offset
+        ts_ws[f'{col_letter}5'] = \
+            f'=(\'Resource Supply (5yr)\'!{col_letter}7-\'Resource Supply (5yr)\'!{col_letter}10)*SUMPRODUCT((\'Mine Inventory\'!$AO$2:$AO$13={month_offset})*(\'Mine Inventory\'!$AF$2:$AF$13))'
+
+        # Row 16: Monthly Unlocked Supply = SUM of rows 3-15
+        ts_ws[f'{col_letter}16'] = f'=SUM({col_letter}3:{col_letter}15)'
+
+        # Row 32: Monthly Change = SUM of rows 17-31 (Circulating Supply additions)
+        ts_ws[f'{col_letter}32'] = f'=SUM({col_letter}17:{col_letter}31)'
+
+    # Cumulative rows
+    for col_idx in range(2, 62):
+        col_letter = get_column_letter(col_idx)
+
+        # Row 35: Cumulative Unlocked Supply (oz)
+        ts_ws[f'{col_letter}35'] = f'=SUM($B$16:{col_letter}16)'
+
+        # Row 36: Cumulative Circulating Supply (oz)
+        ts_ws[f'{col_letter}36'] = f'=SUM($B$32:{col_letter}32)'
+
+        # Row 37: Cumulative Unlocked Supply ($)
+        ts_ws[f'{col_letter}37'] = f'={col_letter}35*XAUconfig!{col_letter}3'
+
+        # Row 38: Cumulative Circulating Supply ($)
+        ts_ws[f'{col_letter}38'] = f'={col_letter}36*XAUconfig!{col_letter}3'
+
+    print("✓ Token Supply formulas added (rows 3, 5, 16, 32, 35-38)")
+    print("✅ Token Supply COMPLETE!")
+
+    return True
+
+def update_token_demand(wb):
+    """Update Token Demand with dynamic formulas"""
+    print_section("PHASE 6: Token Demand Dynamic Formulas")
+
+    td_ws = wb['Token Demand (5yr)']
+
+    # Update headers
+    print("Setting up headers...")
+    for col_idx in range(2, 62):
+        col_letter = get_column_letter(col_idx)
+        td_ws[f'{col_letter}1'] = f'=XAUconfig!{col_letter}4'
+
+    print("✓ Headers linked to XAUconfig")
+
+    # Add formulas for all 60 months
+    print("\nAdding Token Demand formulas...")
+
+    for col_idx in range(2, 62):
+        col_letter = get_column_letter(col_idx)
+        month_offset = col_idx - 2
+
+        # Row 3: Total Unlocked Supply - Cumulative (oz) = Resource Supply Row 34
+        td_ws[f'{col_letter}3'] = f'=\'Resource Supply (5yr)\'!{col_letter}34'
+
+        # Row 4: Total Circulating Supply - Cumulative (oz) = Token Supply Row 36
+        td_ws[f'{col_letter}4'] = f'=\'Token Supply (5yr)\'!{col_letter}36'
+
+        # Row 5: Total Unlocked Supply - Cumulative ($)
+        td_ws[f'{col_letter}5'] = f'={col_letter}3*XAUconfig!{col_letter}3'
+
+        # Row 6: Total Circulating Supply - Cumulative ($)
+        td_ws[f'{col_letter}6'] = f'={col_letter}4*XAUconfig!{col_letter}3'
+
+        # Row 9: RealGold "Leased" Liquidity Supply (oz) - from Mine Inventory W column
+        td_ws[f'{col_letter}9'] = \
+            f'=SUMIF(\'Mine Inventory\'!$AO$2:$AO$13,{month_offset},\'Mine Inventory\'!$W$2:$W$13)'
+
+        # Row 11: RealGold "Leased" Liquidity Supply ($)
+        td_ws[f'{col_letter}11'] = f'={col_letter}9*XAUconfig!{col_letter}3'
+
+        # Row 19: DEX Trading Volume ($)
+        td_ws[f'{col_letter}19'] = f'={col_letter}18*XAUconfig!{col_letter}3'
+
+    print("✓ Token Demand formulas added (rows 3-6, 9, 11, 19)")
+    print("✅ Token Demand COMPLETE!")
 
     return True
 
 def update_other_sheet_headers(wb):
-    """Update other sheets to reference XAUconfig timeline"""
-    print_section("PHASE 5: Update Other Sheet Headers")
+    """Update other cashflow sheets to reference XAUconfig timeline"""
+    print_section("PHASE 7: Update Cashflow Sheet Headers")
 
     sheets_to_update = [
-        'Token Supply (5yr)',
-        'Token Demand (5yr)',
         'RA LLC Cashflow',
         'RAF Cashflow (5yr)',
         'RGT Cashflow (5yr)',
@@ -227,7 +520,7 @@ def update_other_sheet_headers(wb):
 
 def create_model_health(wb):
     """Create Model Health dashboard"""
-    print_section("PHASE 6: Model Health Dashboard")
+    print_section("PHASE 8: Model Health Dashboard")
 
     if 'Model Health' in wb.sheetnames:
         del wb['Model Health']
@@ -317,6 +610,8 @@ def main():
     create_xauconfig_timeline(wb)
     setup_mine_inventory_with_dropdowns(wb)
     update_resource_supply_complete(wb)
+    update_token_supply(wb)
+    update_token_demand(wb)
     update_other_sheet_headers(wb)
     create_model_health(wb)
 
