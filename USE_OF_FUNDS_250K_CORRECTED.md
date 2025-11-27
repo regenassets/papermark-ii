@@ -28,20 +28,21 @@ Regenerative Assets LLC is creating RealGold - a new class of regenerative, gold
 ## Financial Projections
 
 ### Cash Flow Timeline (Dec 2025 - June 2026)
+**Combined Burn Across All Entities (RA LLC + RAF + RGT)**
 
-| **Month** | **Expenses** | **Cumulative Burn** | **Cash Position** |
-|-----------|--------------|---------------------|-------------------|
-| Dec '25 | $0 | $0 | $250,000 |
-| Jan '26 | $26,000 | $26,000 | $224,000 |
-| Feb '26 | $6,100 | $32,100 | $217,900 |
-| Mar '26 | $3,100 | $35,200 | $214,800 |
-| Apr '26 | $3,180 | $38,380 | $211,620 |
-| May '26 | $3,200 | $41,580 | $208,420 |
-| Jun '26 | $3,200 | $44,780 | $205,220 |
+| **Month** | **Total Expenses** | **Cumulative Burn** |
+|-----------|-------------------|---------------------|
+| Dec '25 | $46,770 | $46,770 |
+| Jan '26 | $142,446 | $189,216 |
+| Feb '26 | $141,034 | $330,250 |
+| Mar '26 | $125,771 | $456,021 |
+| Apr '26 | $135,346 | $591,368 |
+| May '26 | $124,346 | $715,714 |
+| Jun '26 | $190,784 | $906,498 |
 
-**Average Monthly Burn**: $7,463 (Jan-Jun 2026)
-**6-Month Runway**: $205,220 remaining after initial deployment
-**Extended Runway**: 27+ months with revenue activation
+**Average Monthly Burn**: $129,500 (across RA LLC, RAF, and RGT)
+**Total 7-Month Burn**: $906,498
+**Note**: $250k investment covers portion of runway; additional funding needed for full deployment
 
 ### Revenue Activation (Post-Investment)
 
