@@ -29,6 +29,16 @@ Regenerative Assets LLC is creating RealGold - a new class of regenerative, gold
 
 ### Cash Flow Timeline (Dec 2025 - June 2026)
 
+| **Month** | **Expenses** | **Cumulative Burn** | **Cash Position** |
+|-----------|--------------|---------------------|-------------------|
+| Dec '25 | $0 | $0 | $250,000 |
+| Jan '26 | $26,000 | $26,000 | $224,000 |
+| Feb '26 | $6,100 | $32,100 | $217,900 |
+| Mar '26 | $3,100 | $35,200 | $214,800 |
+| Apr '26 | $3,180 | $38,380 | $211,620 |
+| May '26 | $3,200 | $41,580 | $208,420 |
+| Jun '26 | $3,200 | $44,780 | $205,220 |
+
 **Average Monthly Burn**: $7,463 (Jan-Jun 2026)
 **6-Month Runway**: $205,220 remaining after initial deployment
 **Extended Runway**: 27+ months with revenue activation
