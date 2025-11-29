@@ -154,7 +154,7 @@ services:
       TRIGGER_API_URL: ${TRIGGER_API_URL:-https://api.trigger.dev}
 
       # Node environment
-      NODE_ENV: production
+      NODE_ENV: development
     ports:
       - "3000:3000"
     networks:
