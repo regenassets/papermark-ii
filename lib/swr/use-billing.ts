@@ -1,6 +1,6 @@
 import { useTeam } from "@/context/team-context";
-import { PLAN_NAME_MAP } from "@/ee/stripe/constants";
-import { SubscriptionDiscount } from "@/ee/stripe/functions/get-subscription-item";
+import { PLAN_NAME_MAP } from "@/lib/ee-stubs/stripe";
+import { SubscriptionDiscount } from "@/lib/ee-stubs/stripe";
 import useSWR from "swr";
 import { useMemo } from "react";
 

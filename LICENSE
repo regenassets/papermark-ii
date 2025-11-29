@@ -1,10 +1,14 @@
 Copyright (c) 2023-present Papermark, Inc.
+Copyright (c) 2025-present Regenerative Assets LLC (AGPL modifications)
 
-Portions of this software are licensed as follows:
+This software is licensed under the GNU Affero General Public License v3.0 (AGPLv3).
 
-- All content that resides under https://github.com/mfts/papermark/tree/main/ee directory of this repository (Commercial License) is licensed under the license defined in "ee/LICENSE".
-- All third party components incorporated into the Papermark Software are licensed under the original license provided by the owner of the applicable component.
-- Content outside of the above mentioned directories or restrictions above is available under the "AGPLv3" license as defined below.
+NOTICE: This is a modified fork of Papermark. All commercial-licensed code from the
+original /ee directory has been removed and replaced with AGPL-licensed implementations.
+
+- All third party components incorporated into this Software are licensed under the
+  original license provided by the owner of the applicable component.
+- All content in this repository is available under the "AGPLv3" license as defined below.
 
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007

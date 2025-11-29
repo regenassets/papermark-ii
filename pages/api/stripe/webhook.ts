@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { processPaymentFailure } from "@/lib/security";
-import { stripeInstance } from "@/ee/stripe";
-import { checkoutSessionCompleted } from "@/ee/stripe/webhooks/checkout-session-completed";
-import { customerSubscriptionDeleted } from "@/ee/stripe/webhooks/customer-subscription-deleted";
-import { customerSubsciptionUpdated } from "@/ee/stripe/webhooks/customer-subscription-updated";
+import { stripeInstance } from "@/lib/ee-stubs/stripe";
+import { checkoutSessionCompleted } from "@/lib/ee-stubs/stripe";
+import { customerSubscriptionDeleted } from "@/lib/ee-stubs/stripe";
+import { customerSubsciptionUpdated } from "@/lib/ee-stubs/stripe";
 import { Readable } from "node:stream";
 import type Stripe from "stripe";
 

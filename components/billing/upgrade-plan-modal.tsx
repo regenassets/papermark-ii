@@ -5,10 +5,10 @@ import { useEffect, useMemo, useState } from "react";
 import React from "react";
 
 import { useTeam } from "@/context/team-context";
-import { getStripe } from "@/ee/stripe/client";
-import { Feature, PlanEnum, getPlanFeatures } from "@/ee/stripe/constants";
-import { getPriceIdFromPlan } from "@/ee/stripe/functions/get-price-id-from-plan";
-import { PLANS } from "@/ee/stripe/utils";
+import { getStripe } from "@/lib/ee-stubs/stripe";
+import { Feature, PlanEnum, getPlanFeatures } from "@/lib/ee-stubs/stripe";
+import { getPriceIdFromPlan } from "@/lib/ee-stubs/stripe";
+import { PLANS } from "@/lib/ee-stubs/stripe";
 import { CheckIcon, CircleHelpIcon, Users2Icon, XIcon } from "lucide-react";
 
 import { useAnalytics } from "@/lib/analytics";

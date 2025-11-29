@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useTeam } from "@/context/team-context";
-import { PlanEnum } from "@/ee/stripe/constants";
+import { PlanEnum } from "@/lib/ee-stubs/stripe";
 import { DocumentVersion } from "@prisma/client";
 import {
   AlertTriangleIcon,

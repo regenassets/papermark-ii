@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import getSubscriptionItem, {
   SubscriptionDiscount,
-} from "@/ee/stripe/functions/get-subscription-item";
-import { isOldAccount } from "@/ee/stripe/utils";
+} from "@/lib/ee-stubs/stripe";
+import { isOldAccount } from "@/lib/ee-stubs/stripe";
 import { getServerSession } from "next-auth/next";
 
 import { errorhandler } from "@/lib/errorHandler";

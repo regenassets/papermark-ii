@@ -82,3 +82,20 @@ export async function getTeamStorageConfigById(
     return getStorageConfig();
   }
 }
+
+/**
+ * Multi-region S3 Store stub
+ * Advanced multi-region storage features were in commercial /ee
+ * For now, this is a simple stub - extend as needed
+ */
+export class MultiRegionS3Store {
+  constructor(config?: any) {}
+  
+  async upload(file: any, options?: any) {
+    throw new Error("MultiRegionS3Store: Advanced storage features not yet implemented");
+  }
+  
+  async download(key: string) {
+    throw new Error("MultiRegionS3Store: Advanced storage features not yet implemented");
+  }
+}

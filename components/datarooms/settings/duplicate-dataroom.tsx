@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { useLimits } from "@/lib/limits/swr-handler";
-import { PlanEnum } from "@/ee/stripe/constants";
+import { PlanEnum } from "@/lib/ee-stubs/stripe";
 import { toast } from "sonner";
 import { mutate } from "swr";
 
