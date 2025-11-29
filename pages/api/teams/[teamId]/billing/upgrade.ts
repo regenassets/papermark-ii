@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { checkRateLimit, rateLimiters } from "@/ee/features/security";
-import { stripeInstance } from "@/ee/stripe";
-import { getPlanFromPriceId, isOldAccount } from "@/ee/stripe/utils";
+import { checkRateLimit, rateLimiters } from "@/lib/security";
+import { stripeInstance } from "@/lib/ee-stubs/stripe";
+import { getPlanFromPriceId, isOldAccount } from "@/lib/ee-stubs/stripe";
 import { waitUntil } from "@vercel/functions";
 import { getServerSession } from "next-auth/next";
 

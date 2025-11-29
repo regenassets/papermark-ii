@@ -1,2 +1,2 @@
 // Re-export from ee folder
-export { default } from "@/ee/features/templates/api/datarooms/apply-template";
+export { default } from "@/lib/ee-stubs/templates";

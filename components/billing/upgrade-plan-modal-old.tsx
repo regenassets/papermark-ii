@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import React from "react";
 
 import { useTeam } from "@/context/team-context";
-import { getStripe } from "@/ee/stripe/client";
-import { PLANS } from "@/ee/stripe/utils";
+import { getStripe } from "@/lib/ee-stubs/stripe";
+import { PLANS } from "@/lib/ee-stubs/stripe";
 import { CheckIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";

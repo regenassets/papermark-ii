@@ -7,7 +7,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 
 import { TeamContextType, initialState, useTeam } from "@/context/team-context";
-import { PlanEnum } from "@/ee/stripe/constants";
+import { PlanEnum } from "@/lib/ee-stubs/stripe";
 import Cookies from "js-cookie";
 import {
   BrushIcon,
@@ -125,24 +125,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/datarooms",
         icon: ServerIcon,
         current: router.pathname === "/datarooms",
-        disabled: !isBusiness && !isDatarooms && !isDataroomsPlus && !isTrial,
+        disabled: false, // AGPL: All features enabled
         trigger: "sidebar_datarooms",
         plan: PlanEnum.Business,
         highlightItem: ["datarooms"],
-        isActive:
-          router.pathname.includes("datarooms") &&
-          (isBusiness || isDatarooms || isDataroomsPlus || isTrial),
-        items:
-          isBusiness || isDatarooms || isDataroomsPlus || isTrial
-            ? dataroomItems
-            : undefined,
+        isActive: router.pathname.includes("datarooms"),
+        items: dataroomItems,
       },
       {
         title: "Visitors",
         url: "/visitors",
         icon: ContactIcon,
         current: router.pathname.includes("visitors"),
-        disabled: isFree && !isTrial,
+        disabled: false, // AGPL: All features enabled
         trigger: "sidebar_visitors",
         plan: PlanEnum.Pro,
         highlightItem: ["visitors"],
@@ -211,10 +206,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     >
       <SidebarHeader className="gap-y-8">
         <p className="hidden w-full justify-center text-2xl font-bold tracking-tighter text-black group-data-[collapsible=icon]:inline-flex dark:text-white">
-          <Link href="/dashboard">P</Link>
+          <Link href="/dashboard">S</Link>
         </p>
         <p className="ml-2 flex items-center text-2xl font-bold tracking-tighter text-black group-data-[collapsible=icon]:hidden dark:text-white">
-          <Link href="/dashboard">Papermark</Link>
+          <Link href="/dashboard">Supermark</Link>
           {userPlan && !isFree && !isDataroomsPlus ? (
             <span className="ml-4 rounded-full bg-background px-2.5 py-1 text-xs tracking-normal text-foreground ring-1 ring-gray-800">
               {userPlan.charAt(0).toUpperCase() + userPlan.slice(1)}

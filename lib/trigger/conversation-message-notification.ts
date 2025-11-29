@@ -1,7 +1,7 @@
 import {
   sendConversationMessageNotificationTask,
   sendConversationTeamMemberNotificationTask,
-} from "@/ee/features/conversations/lib/trigger/conversation-message-notification";
+} from "@/lib/ee-stubs/conversations";
 
 export {
   sendConversationMessageNotificationTask,

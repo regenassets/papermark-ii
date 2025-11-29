@@ -1,4 +1,4 @@
-import ConversationDetail from "@/ee/features/conversations/pages/conversation-detail";
+import ConversationDetail from "@/lib/ee-stubs/conversations";
 
 export default function ConversationDetailPage() {
   return <ConversationDetail />;

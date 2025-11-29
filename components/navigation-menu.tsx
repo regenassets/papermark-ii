@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import * as React from "react";
 
-import { PlanEnum } from "@/ee/stripe/constants";
+import { PlanEnum } from "@/lib/ee-stubs/stripe";
 import { CrownIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { useTeam } from "@/context/team-context";
-import { PlanEnum } from "@/ee/stripe/constants";
+import { PlanEnum } from "@/lib/ee-stubs/stripe";
 import { XIcon } from "lucide-react";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -162,7 +162,8 @@ export function AddDataroomModal({
     }
   };
 
-  // If the team is on a free plan, show the upgrade modal
+  // AGPL: All features enabled - datarooms available to all
+  /* Commented out for AGPL version
   if (isFree || isPro) {
     if (children) {
       return (
@@ -175,6 +176,7 @@ export function AddDataroomModal({
       );
     }
   }
+  */
 
   const onOpenChange = (open: boolean) => {
     if (!open) {

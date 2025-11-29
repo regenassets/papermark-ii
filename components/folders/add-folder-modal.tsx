@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { useTeam } from "@/context/team-context";
-import { PlanEnum } from "@/ee/stripe/constants";
+import { PlanEnum } from "@/lib/ee-stubs/stripe";
 import slugify from "@sindresorhus/slugify";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -135,7 +135,8 @@ export function AddFolderModal({
     }
   };
 
-  // If the team is on a free plan, show the upgrade modal
+  // AGPL: All features enabled - folders available to all
+  /* Commented out for AGPL version
   if (isFree && !isTrial) {
     if (children) {
       return (
@@ -149,6 +150,7 @@ export function AddFolderModal({
       );
     }
   }
+  */
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

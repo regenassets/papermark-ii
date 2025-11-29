@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { checkRateLimit, rateLimiters } from "@/ee/features/security";
-import { stripeInstance } from "@/ee/stripe";
-import { getQuantityFromPriceId } from "@/ee/stripe/functions/get-quantity-from-plan";
-import getSubscriptionItem from "@/ee/stripe/functions/get-subscription-item";
-import { isOldAccount } from "@/ee/stripe/utils";
+import { checkRateLimit, rateLimiters } from "@/lib/security";
+import { stripeInstance } from "@/lib/ee-stubs/stripe";
+import { getQuantityFromPriceId } from "@/lib/ee-stubs/stripe";
+import getSubscriptionItem from "@/lib/ee-stubs/stripe";
+import { isOldAccount } from "@/lib/ee-stubs/stripe";
 import { waitUntil } from "@vercel/functions";
 import { getServerSession } from "next-auth/next";
 

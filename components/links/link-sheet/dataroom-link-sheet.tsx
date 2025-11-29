@@ -3,7 +3,7 @@
 import {
   DataroomLinkSheet as DataroomLinkSheetEE,
   type ItemPermission as ItemPermissionEE,
-} from "@/ee/features/permissions/components/dataroom-link-sheet";
+} from "@/lib/ee-stubs/permissions";
 
 export type ItemPermission = ItemPermissionEE;
 

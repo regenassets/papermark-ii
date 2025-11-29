@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 
 import { useTeam } from "@/context/team-context";
-import { PlanEnum } from "@/ee/stripe/constants";
+import { PlanEnum } from "@/lib/ee-stubs/stripe";
 import { DefaultPermissionStrategy } from "@prisma/client";
 import { parsePageId } from "notion-utils";
 import { toast } from "sonner";
@@ -531,6 +531,8 @@ export function AddDocumentModal({
     setAddDocumentModalOpen && setAddDocumentModalOpen(!isOpen);
   };
 
+  // AGPL: All features enabled - no document limits
+  /* Commented out for AGPL version
   if (!canAddDocuments && children) {
     if (newVersion) {
       return (
@@ -551,6 +553,7 @@ export function AddDocumentModal({
       </UpgradePlanModal>
     );
   }
+  */
 
   return (
     <>

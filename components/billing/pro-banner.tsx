@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { PlanEnum } from "@/ee/stripe/constants";
+import { PlanEnum } from "@/lib/ee-stubs/stripe";
 import Cookies from "js-cookie";
 import { usePlausible } from "next-plausible";
 
@@ -14,6 +14,10 @@ export default function ProBanner({
 }: {
   setShowProBanner: Dispatch<SetStateAction<boolean | null>>;
 }) {
+  // AGPL: No upgrade banners needed - all features are free
+  return null;
+
+  /* Commented out for AGPL version
   const plausible = usePlausible();
 
   const handleHideBanner = () => {
@@ -58,4 +62,5 @@ export default function ProBanner({
       </div>
     </aside>
   );
+  */
 }
