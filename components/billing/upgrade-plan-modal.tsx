@@ -147,6 +147,10 @@ export function UpgradePlanModal({
   highlightItem?: string[];
   children?: React.ReactNode;
 }) {
+  // AGPL: Disable upgrade modal - all features are free
+  return <>{children}</>;
+
+  /* Commented out for AGPL version - no paid plans
   const router = useRouter();
   const [period, setPeriod] = useState<"yearly" | "monthly">("yearly");
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -402,4 +406,5 @@ export function UpgradePlanModal({
       </DialogContent>
     </Dialog>
   );
+  */
 }

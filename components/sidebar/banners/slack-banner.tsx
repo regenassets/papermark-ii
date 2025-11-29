@@ -49,9 +49,9 @@ export default function SlackBanner({
       </button>
       <div className="flex items-center space-x-2">
         <SlackIcon className="h-5 w-5" />
-        <span className="text-sm font-bold">Connect Slack</span>
+        <span className="text-sm font-bold">Connect Mattermost</span>
       </div>
-      <p className="my-4 text-sm">Get visit notifications in Slack channel.</p>
+      <p className="my-4 text-sm">Get visit notifications in Mattermost channel.</p>
       <div className="flex">
         <Button
           type="button"
@@ -59,7 +59,7 @@ export default function SlackBanner({
           className="grow"
           onClick={handleConnectSlack}
         >
-          Set up Slack
+          Set up Mattermost
         </Button>
       </div>
     </aside>

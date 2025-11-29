@@ -6,3 +6,6 @@ export const generateDataroom = async () => ({ success: false, message: "Templat
 export const dataroomTemplateSchema = {};
 export const generateDataroomSchema = {};
 export const applyTemplateSchema = {};
+
+// Default export for compatibility
+export default DataroomTemplates;

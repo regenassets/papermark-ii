@@ -18,6 +18,10 @@ export default function ProAnnualBanner({
 }: {
   setShowProAnnualBanner: Dispatch<SetStateAction<boolean | null>>;
 }) {
+  // AGPL: No upgrade banners needed - all features are free
+  return null;
+
+  /* Commented out for AGPL version
   const plausible = usePlausible();
   const router = useRouter();
   const teamInfo = useTeam();
@@ -91,4 +95,5 @@ export default function ProAnnualBanner({
       </div>
     </aside>
   );
+  */
 }

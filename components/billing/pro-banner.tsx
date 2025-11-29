@@ -14,6 +14,10 @@ export default function ProBanner({
 }: {
   setShowProBanner: Dispatch<SetStateAction<boolean | null>>;
 }) {
+  // AGPL: No upgrade banners needed - all features are free
+  return null;
+
+  /* Commented out for AGPL version
   const plausible = usePlausible();
 
   const handleHideBanner = () => {
@@ -58,4 +62,5 @@ export default function ProBanner({
       </div>
     </aside>
   );
+  */
 }

@@ -135,7 +135,8 @@ export function AddFolderModal({
     }
   };
 
-  // If the team is on a free plan, show the upgrade modal
+  // AGPL: All features enabled - folders available to all
+  /* Commented out for AGPL version
   if (isFree && !isTrial) {
     if (children) {
       return (
@@ -149,6 +150,7 @@ export function AddFolderModal({
       );
     }
   }
+  */
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

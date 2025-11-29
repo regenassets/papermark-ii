@@ -531,6 +531,8 @@ export function AddDocumentModal({
     setAddDocumentModalOpen && setAddDocumentModalOpen(!isOpen);
   };
 
+  // AGPL: All features enabled - no document limits
+  /* Commented out for AGPL version
   if (!canAddDocuments && children) {
     if (newVersion) {
       return (
@@ -551,6 +553,7 @@ export function AddDocumentModal({
       </UpgradePlanModal>
     );
   }
+  */
 
   return (
     <>

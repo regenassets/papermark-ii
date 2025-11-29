@@ -71,7 +71,8 @@ export function AddTagsModal({
   const isFormValid =
     tagForm.name.length >= 3 && !!tagForm.color && (!tagForm.id || hasChanged);
 
-  // If the team is on a free plan and has reached the max limit of 5 tags
+  // AGPL: All features enabled - unlimited tags
+  /* Commented out for AGPL version
   if (isFree && tagCount >= 5) {
     if (children) {
       return (
@@ -84,6 +85,7 @@ export function AddTagsModal({
       );
     }
   }
+  */
 
   function handleValueChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

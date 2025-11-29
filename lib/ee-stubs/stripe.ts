@@ -43,9 +43,12 @@ export type Feature = {
 };
 
 // Get features for a plan - AGPL version (all features enabled)
-export const getPlanFeatures = (plan: PlanEnum): Feature[] => {
+export const getPlanFeatures = (plan: PlanEnum, options?: any) => {
   // In AGPL version, all features are always enabled
-  return [];
+  return {
+    features: [],
+    featureIntro: "All features included - unlimited usage",
+  };
 };
 
 // Plans configuration - AGPL version (no paid plans)

@@ -103,11 +103,8 @@ export function AddDomainModal({
     !onAddition && window.open("/settings/domains", "_blank");
   };
 
-  // If the team is
-  // - on a free plan
-  // - on pro plan and has custom domain on pro plan disabled
-  // - on business plan and has custom domain in dataroom disabled
-  // => then show the upgrade modal
+  // AGPL: All features enabled - no plan restrictions
+  /* Commented out for AGPL version
   if (
     isFree ||
     (isPro && !limits?.customDomainOnPro) ||
@@ -144,6 +141,7 @@ export function AddDomainModal({
       );
     }
   }
+  */
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
